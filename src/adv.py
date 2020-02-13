@@ -56,12 +56,11 @@ player = Player("Wanderer", room["outside"])
 def get_input():
     user = input("> What shall thou do next:")
     user = user.split(" ")
-    print(user)
     return user
 
 
 def room_details(r):
-    print("===============================================")
+    print("\n===============================================")
     print(f'You are currently in the {r.name}', end=': ')
     print(r.description)
     if len(r.items) == 0:
@@ -71,7 +70,7 @@ def room_details(r):
         for item in r.items:
             print(item, end=", ")
 
-    print("===============================================")
+    print("\n===============================================")
 
 
 def process_input(r, cmd):
@@ -83,26 +82,22 @@ def process_input(r, cmd):
 
         if(val in choices and r[f"{val}_to"] == None):
             print("**Map isn't that expensive yet, buy more DLCs, scrub!**")
+            return
 
-        elif(val == "n"):
-            player.current_room = player.current_room.n_to
+        if(val == "inventory" or val == "i"):
+            if len(player.inventory):
+                print("Your items are: ")
+                for i in player.inventory:
+                    print(i.name)
+            else:
+                print("You are broke broke")
+            return
 
-        elif(val == "s"):
-            player.current_room = player.current_room.s_to
+        if(val not in choices):
+            print("Invalid input!")
+            return
 
-        elif(val == "w"):
-            player.current_room = player.current_room.w_to
-
-        elif(val == "e"):
-            player.current_room = player.current_room.e_to
-
-        elif(val == "inventory" or val == "i"):
-            print("Your items are: ")
-            for i in player.inventory:
-                print(i.name)
-
-        else:
-            print("Invalid input scrub")
+        player.current_room = r[f"{val}_to"]
 
         room_details(player.current_room)
 
@@ -125,12 +120,11 @@ def process_input(r, cmd):
                 removed_item.on_drop()
 
             else:
-                print("That item is not in the room")
+                print("You dpo not have that item in your inventory")
 
 
+print("Welcome warrior!")
 room_details(player.current_room)
 while True:
     inp = get_input()
     process_input(player.current_room, inp)
-
-# print(player.current_room["name"])
