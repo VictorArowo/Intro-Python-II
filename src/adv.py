@@ -76,15 +76,15 @@ def room_details(r):
 def process_input(r, cmd):
     if len(cmd) == 1:
         val = cmd[0]
-        if(val == "q"):
+        if val == "q":
             print("Hope to see you again!")
             exit()
 
-        if(val in choices and r[f"{val}_to"] == None):
+        if val in choices and r[f"{val}_to"] == None:
             print("**Map isn't that expensive yet, buy more DLCs, scrub!**")
             return
 
-        if(val == "inventory" or val == "i"):
+        if val == "inventory" or val == "i":
             if len(player.inventory):
                 print("Your items are: ")
                 for i in player.inventory:
@@ -93,8 +93,13 @@ def process_input(r, cmd):
                 print("You are broke broke")
             return
 
-        if(val not in choices):
-            print("Invalid input!")
+        if val == "h" or val == "help":
+            print("COMMANDS: \nn ==> Go North\ns ==> Go South\nw ==> Go West\ne ==> Go East\nget ITEM_NAME ==> Pick up an item in a room\n\
+drop ITEM_NAME ==> Drop an item in a room\ni ==> View your inventory\nq ==> Quit Game")
+            return
+
+        if val not in choices:
+            print("Invalid input!. Enter \"h\" for help instructions")
             return
 
         player.current_room = r[f"{val}_to"]
