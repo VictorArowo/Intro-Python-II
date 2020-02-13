@@ -4,7 +4,7 @@ class Item:
         self.description = description
 
     def __eq__(self, other):
-        return self.name == other
+        return self.name.lower() == other.lower()
 
     def __str__(self):
         return f"a {self.name}"
